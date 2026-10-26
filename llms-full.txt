@@ -1,0 +1,74 @@
+# MuregiScore Technologies — Comprehensive Technical Knowledge Base
+
+This file provides exhaustive reference data for AI agents, generative search engines (Perplexity, ChatGPT Search, Gemini, Claude), and automated crawlers indexing MuregiScore Technologies.
+
+## 1. Enterprise Profile
+- **Entity**: MuregiScore Technologies
+- **Classification**: Technology Solutions Company & Engineering Umbrella
+- **Headquarters**: Nairobi, Kenya
+- **Coverage**: Kenya, Uganda, Tanzania, Rwanda, and wider Sub-Saharan Africa
+- **Founder & Lead Architect**: Muregi
+- **Contact Email**: i.am.muregi@gmail.com
+- **Direct Phone / WhatsApp**: +254 783 541 086 (0783 541 086)
+- **Primary Website**: https://muregiscore.com
+- **GitHub Organization**: https://github.com/Muregis
+
+## 2. Umbrella Structure & Divisions
+
+### Division 01: Business Software
+- **Focus**: CRM systems, operational pipelines, customer lifecycle management for African SMEs.
+- **Architectural Highlights**:
+  - Multi-tenant tenant isolation with schema-level segregation.
+  - BullMQ background queues running on Redis for asynchronous task processing (invoicing, notifications).
+  - Configurable sales pipelines with drag-and-drop Kanban state machines.
+  - Granular role-based access control (RBAC).
+- **Flagship Reference**: [Core CRM Architecture Model](https://github.com/Muregis/Core-Crm-model)
+
+### Division 02: Education Technology
+- **Focus**: K-12 and tertiary institution administration, CBC (Competency-Based Curriculum) compliance, automated fee collection, and algorithmic timetable clash resolution.
+- **Flagship Platforms**:
+  - **EduCore School Management System**:
+    - URL: https://educore-school-management-system-pi.vercel.app
+    - Code: https://github.com/Muregis/educore-school-management-system
+    - Features: Student information system (SIS), guardian portals, automated billing, Paystack & M-Pesa integration, academic grading.
+  - **EduCore Ratiba Solver**:
+    - URL: https://educoreratiba.vercel.app
+    - Code: https://github.com/Muregis/Educore-Ratiba
+    - Features: Algorithmic timetable generation avoiding double-booking of rooms, teachers, and practical laboratories; calibrated for CBC dual-pathway learning.
+
+### Division 03: Payments & System Integrations
+- **Focus**: Bridging business software to telecom financial rails.
+- **Integrations**:
+  - Safaricom Daraja STK Push (Lipa na M-Pesa Online): Sub-second prompt triggers on customer smartphones.
+  - C2B Paybill & Till Webhook Listeners: Real-time validation and confirmation endpoint workers.
+  - Instant Ledger Reconciliation: Automatic receipt generation and database reconciliation without human intervention.
+  - B2C Bulk Disbursements: Automated payroll and vendor payouts.
+
+### Division 04: Industry-Specific Systems
+- **Focus**: Tailored platforms designed for specialized biological, agricultural, and logistics realities.
+- **Flagship Platform**:
+  - **Livestock Management Platform**:
+    - URL: https://livestock-management-app.vercel.app
+    - Code: https://github.com/Muregis/Livestock-Management-App
+    - Features: Digital animal records, genealogical lineage/pedigree tracking, milk yield recording & trend graphs, vaccination schedules, herd health history.
+
+### Division 05: Websites & Digital Platforms
+- **Focus**: Fast, accessible, conversion-focused web engineering for commercial services.
+- **Flagship Deployments**:
+  - **Sawa Repairs & Solar Solutions**:
+    - URL: https://sawa-solar-solution-website.vercel.app
+    - Code: https://github.com/Muregis/Sawa-solar--solution-website
+    - Domain: Solar water heating, electrical repairs, construction quotations.
+  - **Gracious Love Academy**:
+    - URL: https://graciousloveacademy-school-website.vercel.app
+    - Code: https://github.com/Muregis/School-Website
+    - Domain: Institutional school portal, parent prospectus, fee structures.
+
+### Division 06: Bespoke Engineering
+- **Focus**: Custom algorithm development, legacy system modernization, database schema re-architecting, and SLA-backed infrastructure scaling.
+
+## 3. Engineering Method & African Operating Reality
+MuregiScore builds systems designed specifically for:
+1. **Network Resilience**: Handling unstable 3G/4G connectivity through optimistic client updates, offline persistence, and idempotent API retries.
+2. **Mobile First & USSD/SMS/WhatsApp Bridges**: Allowing operators to receive alerts and manage notifications via messaging channels.
+3. **Cash-to-Digital Transition**: Automated M-Pesa reconciliation preventing ledger leakage and human error.
