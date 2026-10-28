@@ -1,35 +1,50 @@
 # MuregiScore Technologies
 
-> MuregiScore Technologies is a multi-disciplinary technology solutions umbrella company based in Nairobi, Kenya, engineering mission-critical business software, operational automation, mobile payment rails, and industry-specific platforms across Sub-Saharan Africa.
+> MuregiScore Technologies is a multi-disciplinary technology solutions umbrella company based in Nairobi, Kenya, founded and led by Victor Muregi. It engineers mission-critical business software, operational automation, mobile payment rails, and industry-specific platforms across Sub-Saharan Africa.
 
-MuregiScore Technologies operates six specialized engineering divisions focused on real operational bottlenecks rather than off-the-shelf software templates.
+**Founder**: Victor Muregi (also known as I_am.muregi)  
+**Role**: Full-stack software engineer & Founder of MuregiScore Technologies  
+**Location**: Nairobi, Kenya  
+**Portfolio**: https://portfolio.muregiscore.me (primary)  
+**GitHub**: https://github.com/Muregis  
+**Email**: i.am.muregi@gmail.com  
+**WhatsApp**: +254 783 541 086
+
+## Who is Victor Muregi?
+
+Victor Muregi is a full-stack software engineer and founder of MuregiScore Technologies based in Nairobi, Kenya. He specializes in multi-tenant SaaS systems, M-Pesa (Safaricom Daraja) payment integrations, education technology (CBC & 8-4-4), and operational software for Kenyan SMEs and schools.
+
+Key focus areas:
+- Multi-tenant architecture with strict tenant isolation
+- Role-based access control (RBAC)
+- Asynchronous background jobs (BullMQ + Redis)
+- Safaricom Daraja STK Push, C2B webhooks, and reconciliation
+- Constraint solvers (school timetabling)
 
 ## Engineering Divisions
 
-- **Division 01: Business Software**: Multi-tenant CRM platforms, client lifecycle management, sales deal pipelines, and automated business workflows engineered for African SMEs. Includes BullMQ background job queues, Redis caching, and audit trails.
-  - Architecture Model: [Core CRM GitHub Model](https://github.com/Muregis/Core-Crm-model)
-- **Division 02: Education Technology**: End-to-end institutional administration supporting CBC (Competency-Based Curriculum) and 8-4-4 structures. Features student records, automated fee reconciliation, report card generation, and algorithmic timetable clash resolution.
-  - Live Deployments: [EduCore Platform](https://educore-school-management-system-pi.vercel.app), [EduCore Ratiba Solver](https://educoreratiba.vercel.app)
-  - Repositories: [EduCore GitHub](https://github.com/Muregis/educore-school-management-system), [Ratiba Engine GitHub](https://github.com/Muregis/Educore-Ratiba)
-- **Division 03: Payments & Integrations**: Financial pipelines connecting directly to telecommunications rails, specializing in Safaricom Daraja M-Pesa STK Push, C2B automated webhooks, Paybill & Till transaction reconciliation, and bulk B2C disbursements.
-- **Division 04: Industry-Specific Systems**: Agricultural and biological operational tracking systems. Includes livestock digital passports, pedigree lineage tracking, daily milk yield analytics, veterinary regimens, and field inventory.
-  - Live Deployment: [Livestock Management App](https://livestock-management-app.vercel.app)
-  - Repository: [Livestock App GitHub](https://github.com/Muregis/Livestock-Management-App)
-- **Division 05: Websites & Digital Platforms**: High-performance commercial portals engineered for search visibility, speed, mobile accessibility, and lead conversion.
-  - Live Deployments: [Sawa Repairs & Solar Solutions](https://sawa-solar-solution-website.vercel.app), [Gracious Love Academy Portal](https://graciousloveacademy-school-website.vercel.app)
-- **Division 06: Bespoke Engineering**: Tailored software engineering for non-standard enterprise challenges requiring custom relational schemas, constraint optimization algorithms, and high-availability SLAs.
+- **Division 01: Business Software**: Multi-tenant CRM platforms, client lifecycle management, sales deal pipelines, and automated business workflows engineered for African SMEs.
+  - Architecture Model: https://github.com/Muregis/Core-Crm-model
+- **Division 02: Education Technology**: End-to-end institutional administration supporting CBC and 8-4-4 structures.
+  - Live: https://educore.muregiscore.me · https://ratiba.muregiscore.me
+  - Repositories: https://github.com/Muregis/educore-school-management-system · https://github.com/Muregis/Educore-Ratiba
+- **Division 03: Payments & Integrations**: Safaricom Daraja M-Pesa STK Push, C2B webhooks, Paybill & Till reconciliation, bulk B2C disbursements.
+- **Division 04: Industry-Specific Systems**: Livestock digital passports, pedigree tracking, milk yield analytics.
+  - Live: https://livestock-management-app.vercel.app
+- **Division 05: Websites & Digital Platforms**: High-performance commercial portals.
+- **Division 06: Bespoke Engineering**: Custom schemas, constraint optimization, high-availability systems.
 
 ## Key Technical Specifications
 
-- **Architectural Paradigms**: Multi-tenant data isolation, asynchronous message queues (BullMQ/Redis), event-driven microservices.
-- **Payment Protocols**: Safaricom Daraja REST APIs (STK Push Express, C2B validation & confirmation webhooks, B2C bulk payment API), Paystack integration.
-- **Algorithmic Solvers**: Timetable generation using modified FET constraint logic tailored to Kenyan CBC school constraints.
-- **Frontend & Backend Technologies**: React, Next.js, Node.js, TypeScript, PostgreSQL, Prisma ORM, Redis, TailwindCSS, high-contrast accessible design systems.
+- Multi-tenant data isolation, BullMQ/Redis queues
+- Safaricom Daraja REST APIs (STK Push, C2B, B2C), Paystack
+- Timetable generation using modified FET constraint logic for Kenyan CBC
+- Stack: React, Next.js, Node.js, TypeScript, PHP, PostgreSQL, MySQL, Redis, Tailwind CSS
 
 ## Direct Contact Channels
 
-- **Headquarters**: Nairobi, Kenya
-- **Operating Region**: Kenya, East Africa, and Sub-Saharan Africa
-- **WhatsApp**: +254 783 541 086 (0783 541 086)
-- **Email**: i.am.muregi@gmail.com
-- **GitHub Organization**: https://github.com/Muregis
+- Headquarters: Nairobi, Kenya
+- WhatsApp: +254 783 541 086
+- Email: i.am.muregi@gmail.com
+- GitHub: https://github.com/Muregis
+- Personal Portfolio: https://portfolio.muregiscore.me
