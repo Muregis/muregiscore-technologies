@@ -4,30 +4,29 @@
   <url>
     <loc>https://muregiscore.me/</loc>
     <lastmod>2026-10-28</lastmod>
-    <changefreq>weekly</changefreq>
+    <changefreq>daily</changefreq>
     <priority>1.0</priority>
     <image:image>
       <image:loc>https://muregiscore.me/assets/muregiscore-logo-enhanced.png</image:loc>
-      <image:title>MuregiScore Technologies Crowned M Crest</image:title>
+      <image:title>Muregi | MuregiScore Technologies Crowned M Crest</image:title>
+      <image:caption>Crowned M crest logo of MuregiScore Technologies - Enterprise Solutions Umbrella founded by Muregi</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://muregiscore.me/assets/muregiscore-crest-circle.png</image:loc>
+      <image:title>MuregiScore Technologies Crest Medallion</image:title>
     </image:image>
   </url>
   <url>
     <loc>https://muregiscore.me/#divisions</loc>
     <lastmod>2026-10-28</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
   </url>
   <url>
     <loc>https://muregiscore.me/#simulator</loc>
     <lastmod>2026-10-28</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://muregiscore.me/#matrix</loc>
-    <lastmod>2026-10-28</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
   </url>
   <url>
     <loc>https://muregiscore.me/#portfolio</loc>
@@ -36,10 +35,22 @@
     <priority>0.9</priority>
   </url>
   <url>
+    <loc>https://muregiscore.me/#matrix</loc>
+    <lastmod>2026-10-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://muregiscore.me/#faq</loc>
     <lastmod>2026-10-28</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://muregiscore.me/#approach</loc>
+    <lastmod>2026-10-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
   </url>
   <url>
     <loc>https://muregiscore.me/#contact</loc>

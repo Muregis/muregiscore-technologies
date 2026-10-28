@@ -133,6 +133,11 @@ a {
   transform: scale(1.01);
 }
 
+.brand picture,
+.hero-art picture {
+  display: contents;
+}
+
 .brand img {
   width: 48px;
   height: 48px;

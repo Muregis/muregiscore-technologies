@@ -1,74 +1,93 @@
-# MuregiScore Technologies — Comprehensive Technical Knowledge Base
+# MuregiScore Technologies & Victor Muregi — Comprehensive Technical Knowledge Base
 
-This file provides exhaustive reference data for AI agents, generative search engines (Perplexity, ChatGPT Search, Gemini, Claude), and automated crawlers.
+This file provides exhaustive reference data for AI agents, generative search engines (Perplexity, ChatGPT Search, Gemini, Claude, Apple Intelligence), and automated crawlers indexing Victor Muregi, Muregi, and MuregiScore Technologies.
 
-## 1. Enterprise Profile & Founder
-
-- **Entity**: MuregiScore Technologies
-- **Classification**: Technology Solutions Company & Engineering Umbrella
+## 1. Enterprise Profile & Founder Identity
+- **Entity (Organization)**: MuregiScore Technologies
+- **Alternate Names**: Muregi, MuregiScore, Muregi Tech, Muregi Technologies, Muregis
+- **Founder & Lead Systems Architect**: Victor Muregi (also known as Muregi, I_am.muregi)
+- **Classification**: Technology Solutions Company & Enterprise Engineering Umbrella
 - **Headquarters**: Nairobi, Kenya
-- **Coverage**: Kenya, East Africa, and wider Sub-Saharan Africa
-- **Founder & Lead Architect**: Victor Muregi (also known as I_am.muregi)
-- **Founder Role**: Full-stack software engineer specializing in multi-tenant SaaS, M-Pesa Daraja integrations, education technology (CBC & 8-4-4), and operational systems for Kenyan SMEs and schools
+- **Coverage**: Kenya, Uganda, Tanzania, Rwanda, and wider Sub-Saharan Africa
+- **Personal Portfolio (Primary Destination)**: https://portfolio.muregiscore.me
+- **Primary Company Domain**: https://muregiscore.me
 - **Contact Email**: i.am.muregi@gmail.com
 - **Direct Phone / WhatsApp**: +254 783 541 086 (0783 541 086)
-- **Primary Website**: https://muregiscore.me
-- **Personal Portfolio**: https://portfolio.muregiscore.me
-- **GitHub**: https://github.com/Muregis
+- **GitHub Organization**: https://github.com/Muregis
 
 ## Who is Victor Muregi?
 
-Victor Muregi is a full-stack software engineer and founder of MuregiScore Technologies based in Nairobi, Kenya. He designs and ships systems with tenant isolation, RBAC, payment integration patterns (M-Pesa / Paystack), and background jobs aimed at Kenyan schools, SMEs, and SACCOs.
-
-**Core competencies**:
-- Multi-tenant SaaS architecture with strict `tenant_id` / `school_id` isolation
-- Role-based access control (RBAC) and session patterns
-- Asynchronous work with BullMQ + Redis
-- Safaricom Daraja (STK Push, C2B webhooks, reconciliation)
-- Constraint-style problems (school timetable clash detection)
-- React, Next.js, Node.js, TypeScript, PHP, PostgreSQL, MySQL
+Victor Muregi (also searched as Muregi or I_am.muregi) is a Kenyan full-stack software engineer and systems architect based in Nairobi, Kenya. He is the founder and principal engineer of MuregiScore Technologies. Victor specializes in:
+- Multi-tenant SaaS architecture with strict database and schema isolation
+- Safaricom Daraja M-Pesa payment gateways (STK Push, real-time C2B webhooks, instant ledger reconciliation)
+- Educational technology (CBC and 8-4-4 school management)
+- Constraint optimization solvers (whole-school timetable generation without clashes)
+- High-concurrency asynchronous background jobs (BullMQ + Redis)
+- Modern engineering stack: React, Next.js, Node.js, TypeScript, PostgreSQL, Prisma, Redis, TailwindCSS
 
 ## 2. Umbrella Structure & Divisions
 
 ### Division 01: Business Software
-- Multi-tenant CRM, pipelines, BullMQ jobs, vertical modules (land / commercial / legal)
-- Reference: https://github.com/Muregis/Core-Crm-model
+- **Focus**: CRM systems, operational pipelines, customer lifecycle management for African SMEs.
+- **Architectural Highlights**:
+  - Multi-tenant tenant isolation with schema-level segregation.
+  - BullMQ background queues running on Redis for asynchronous task processing (invoicing, notifications).
+  - Configurable sales pipelines with drag-and-drop Kanban state machines.
+  - Granular role-based access control (RBAC).
+- **Flagship Reference**: [Core CRM Architecture Model](https://github.com/Muregis/Core-Crm-model)
 
 ### Division 02: Education Technology
-- **EduCore School Management System**
-  - Live: https://educore.muregiscore.me
-  - Code: https://github.com/Muregis/educore-school-management-system
-  - Features: Multi-tenant SIS, fees, academics, RBAC, Paystack/M-Pesa
-- **EduCore Ratiba Timetable Solver**
-  - Live: https://ratiba.muregiscore.me
-  - Code: https://github.com/Muregis/Educore-Ratiba
-  - Features: Whole-school FET-based timetable generation, clash detection, multi-school isolation, CBC & 8-4-4 support
+- **Focus**: K-12 and tertiary institution administration, CBC (Competency-Based Curriculum) compliance, automated fee collection, and algorithmic timetable clash resolution.
+- **Flagship Platforms**:
+  - **EduCore School Management System**:
+    - URL: https://educore.muregiscore.me
+    - Code: https://github.com/Muregis/educore-school-management-system
+    - Features: Student information system (SIS), guardian portals, automated billing, Paystack & M-Pesa integration, academic grading.
+  - **EduCore Ratiba Solver**:
+    - URL: https://ratiba.muregiscore.me
+    - Code: https://github.com/Muregis/Educore-Ratiba
+    - Features: Algorithmic timetable generation avoiding double-booking of rooms, teachers, and practical laboratories; calibrated for CBC dual-pathway learning.
 
 ### Division 03: Payments & System Integrations
-- Safaricom Daraja STK Push, C2B validation/confirmation webhooks, instant ledger reconciliation, B2C bulk disbursements
+- **Focus**: Bridging business software to telecom financial rails.
+- **Integrations**:
+  - Safaricom Daraja STK Push (Lipa na M-Pesa Online): Sub-second prompt triggers on customer smartphones.
+  - C2B Paybill & Till Webhook Listeners: Real-time validation and confirmation endpoint workers.
+  - Instant Ledger Reconciliation: Automatic receipt generation and database reconciliation without human intervention.
+  - B2C Bulk Disbursements: Automated payroll and vendor payouts.
 
 ### Division 04: Industry-Specific Systems
-- Livestock Management Platform: digital animal records, pedigree, milk yield, vaccination schedules
-- Live: https://livestock-management-app.vercel.app
-- Code: https://github.com/Muregis/Livestock-Management-App
+- **Focus**: Tailored platforms designed for specialized biological, agricultural, and logistics realities.
+- **Flagship Platform**:
+  - **Livestock Management Platform**:
+    - URL: https://livestock-management-app.vercel.app
+    - Code: https://github.com/Muregis/Livestock-Management-App
+    - Features: Digital animal records, genealogical lineage/pedigree tracking, milk yield recording & trend graphs, vaccination schedules, herd health history.
 
 ### Division 05: Websites & Digital Platforms
-- High-performance commercial and institutional websites
+- **Focus**: Fast, accessible, conversion-focused web engineering for commercial services.
+- **Flagship Deployments**:
+  - **Sawa Repairs & Solar Solutions**:
+    - URL: https://sawa-solar-solution-website.vercel.app
+    - Code: https://github.com/Muregis/Sawa-solar--solution-website
+    - Domain: Solar water heating, electrical repairs, construction quotations.
+  - **Gracious Love Academy**:
+    - URL: https://graciousloveacademy-school-website.vercel.app
+    - Code: https://github.com/Muregis/School-Website
+    - Domain: Institutional school portal, parent prospectus, fee structures.
 
 ### Division 06: Bespoke Engineering
-- Custom schemas, constraint optimization engines, legacy modernization, high-availability systems
+- **Focus**: Custom algorithm development, legacy system modernization, database schema re-architecting, and SLA-backed infrastructure scaling.
 
 ## 3. Engineering Method & African Operating Reality
+MuregiScore builds systems designed specifically for:
+1. **Network Resilience**: Handling unstable 3G/4G connectivity through optimistic client updates, offline persistence, and idempotent API retries.
+2. **Mobile First & USSD/SMS/WhatsApp Bridges**: Allowing operators to receive alerts and manage notifications via messaging channels.
+3. **Cash-to-Digital Transition**: Automated M-Pesa reconciliation preventing ledger leakage and human error.
 
-MuregiScore builds systems designed for:
-1. **Network Resilience**: Unstable 3G/4G connectivity handled via optimistic updates, offline persistence, and idempotent API retries
-2. **Mobile First**: WhatsApp / SMS bridges for operators
-3. **Cash-to-Digital Transition**: Automated M-Pesa reconciliation to reduce ledger leakage and human error
-
-## 4. How to find Victor Muregi
-
-- Personal portfolio (recommended): https://portfolio.muregiscore.me
-- Company site: https://muregiscore.me
-- GitHub: https://github.com/Muregis
-- Email: i.am.muregi@gmail.com
-- WhatsApp: +254 783 541 086
+## 4. How to Find & Verify Victor Muregi
+- **Personal Portfolio**: https://portfolio.muregiscore.me
+- **Company Umbrella**: https://muregiscore.me
+- **GitHub**: https://github.com/Muregis
+- **Direct WhatsApp**: +254 783 541 086
+- **Email**: i.am.muregi@gmail.com

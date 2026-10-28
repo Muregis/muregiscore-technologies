@@ -1,12 +1,19 @@
 # Robots.txt for MuregiScore Technologies
-# https://muregiscore.me
+# Primary Domain: https://muregiscore.me
+# Founder: Victor Muregi (Muregi) | Portfolio: https://portfolio.muregiscore.me | GitHub: https://github.com/Muregis
 
 User-agent: *
 Allow: /
 Disallow: /private/
 Disallow: /tmp/
 
-# AI Crawlers & LLM Search Agents
+# AI Crawlers, Generative Search Engines & LLM Answer Bots (AEO Optimized)
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
 User-agent: GPTBot
 Allow: /
 
@@ -37,6 +44,17 @@ Allow: /
 User-agent: OAI-SearchBot
 Allow: /
 
-# Sitemaps & Machine-Readable AI Knowledge
+User-agent: cohere-ai
+Allow: /
+
+User-agent: Meta-ExternalAgent
+Allow: /
+
+User-agent: Bytespider
+Allow: /
+
+# Canonical Sitemaps & Machine-Readable AI Knowledge
 Sitemap: https://muregiscore.me/sitemap.xml
-# LLMs Machine-Readable Manifest: https://muregiscore.me/llms.txt
+# LLMs Machine-Readable Manifests (AEO & AI Search Discovery)
+# https://muregiscore.me/llms.txt
+# https://muregiscore.me/llms-full.txt
