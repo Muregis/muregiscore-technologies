@@ -1,5 +1,5 @@
 # Robots.txt for MuregiScore Technologies
-# https://muregiscore.com
+# https://muregiscore.me
 
 User-agent: *
 Allow: /
@@ -38,5 +38,5 @@ User-agent: OAI-SearchBot
 Allow: /
 
 # Sitemaps & Machine-Readable AI Knowledge
-Sitemap: https://muregiscore.com/sitemap.xml
-# LLMs Machine-Readable Manifest: https://muregiscore.com/llms.txt
+Sitemap: https://muregiscore.me/sitemap.xml
+# LLMs Machine-Readable Manifest: https://muregiscore.me/llms.txt
