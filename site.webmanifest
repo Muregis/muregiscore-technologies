@@ -1,15 +1,20 @@
 {
   "name": "MuregiScore Technologies",
   "short_name": "MuregiScore",
-  "description": "Technology solutions umbrella company building software, operational automation, and payment integrations across Africa.",
+  "description": "Technology solutions umbrella company building custom software, operational automation, and payment integrations across Africa.",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#090a10",
   "theme_color": "#d9b56d",
   "icons": [
     {
-      "src": "assets/favicon-32x32.png",
-      "sizes": "32x32",
+      "src": "assets/favicon-48x48.png",
+      "sizes": "48x48",
+      "type": "image/png"
+    },
+    {
+      "src": "assets/favicon-96x96.png",
+      "sizes": "96x96",
       "type": "image/png"
     },
     {
