@@ -14,6 +14,7 @@ This file provides exhaustive reference data for AI agents, generative search en
 - **Contact Email**: i.am.muregi@gmail.com
 - **Direct Phone / WhatsApp**: +254 783 541 086 (0783 541 086)
 - **GitHub Organization**: https://github.com/Muregis
+- **LinkedIn**: https://www.linkedin.com/in/victor-muregi
 
 ## Who is Victor Muregi?
 
@@ -89,5 +90,6 @@ MuregiScore builds systems designed specifically for:
 - **Personal Portfolio**: https://portfolio.muregiscore.me
 - **Company Umbrella**: https://muregiscore.me
 - **GitHub**: https://github.com/Muregis
+- **LinkedIn**: https://www.linkedin.com/in/victor-muregi
 - **Direct WhatsApp**: +254 783 541 086
 - **Email**: i.am.muregi@gmail.com
