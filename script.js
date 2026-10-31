@@ -385,45 +385,159 @@ document.addEventListener("DOMContentLoaded", () => {
   const mpesaTerminal = document.getElementById("mpesa-terminal");
   const mpesaStatus = document.getElementById("mpesa-sim-status");
   const mpesaBtn = document.getElementById("btn-trigger-mpesa");
+  const mpesaPhoneCard = document.getElementById("mpesa-phone-card");
+  const phoneConfirmBtn = document.getElementById("btn-phone-confirm");
+  const phoneValAmount = document.getElementById("phone-val-amount");
+  const phoneValRef = document.getElementById("phone-val-ref");
+  const phoneClock = document.getElementById("phone-clock");
+  let mpesaTimer = null;
+
+  function resetMpesaFlowNodes() {
+    for (let i = 1; i <= 5; i++) {
+      const node = document.getElementById(`flow-mpesa-${i}`);
+      if (node) {
+        node.className = i === 1 ? "flow-node active" : "flow-node";
+      }
+    }
+  }
+
+  function setMpesaFlowNode(step) {
+    for (let i = 1; i <= 5; i++) {
+      const node = document.getElementById(`flow-mpesa-${i}`);
+      if (node) {
+        if (i < step) {
+          node.className = "flow-node done";
+        } else if (i === step) {
+          node.className = "flow-node active";
+        } else {
+          node.className = "flow-node";
+        }
+      }
+    }
+  }
+
+  function executeMpesaCallback(phone, amount, ref) {
+    if (mpesaTimer) clearTimeout(mpesaTimer);
+    if (mpesaPhoneCard) mpesaPhoneCard.classList.remove("active");
+    setMpesaFlowNode(4);
+
+    const receiptNum = `QKD${Math.floor(100000 + Math.random() * 900000)}MP`;
+
+    appendTerminalLine(mpesaTerminal, `[480ms] Inbound Webhook Callback received from Safaricom IP: 196.201.214.200`, "t-info");
+    appendTerminalLine(mpesaTerminal, `[520ms] HMAC SHA-256 Webhook signature verified with Daraja Passkey`, "t-gold");
+    appendTerminalLine(mpesaTerminal, `[560ms] Webhook Payload:\n` + JSON.stringify({
+      Body: {
+        stkCallback: {
+          MerchantRequestID: "29115-34620561-1",
+          CheckoutRequestID: `ws_CO_${Date.now()}`,
+          ResultCode: 0,
+          ResultDesc: "The service request is processed successfully.",
+          CallbackMetadata: {
+            Item: [
+              { Name: "Amount", Value: parseFloat(amount) },
+              { Name: "MpesaReceiptNumber", Value: receiptNum },
+              { Name: "TransactionDate", Value: parseInt(new Date().toISOString().replace(/[-:T.Z]/g, '').slice(0, 14)) },
+              { Name: "PhoneNumber", Value: parseInt(phone) }
+            ]
+          }
+        }
+      }
+    }, null, 2), "t-dim");
+
+    setTimeout(() => {
+      setMpesaFlowNode(5);
+      appendTerminalLine(mpesaTerminal, `[740ms] [ACID TRANSACTION] Ledger reconciled: Account "${ref}" credited with KES ${amount}.00`, "t-success");
+      appendTerminalLine(mpesaTerminal, `[810ms] BullMQ Job #SMS-${Math.floor(1000 + Math.random() * 9000)} dispatched: Automated receipt sent to ${phone}`, "t-gold");
+
+      if (mpesaStatus) {
+        mpesaStatus.textContent = "SUCCESS \u2022 690ms";
+        mpesaStatus.style.color = "#38e17b";
+      }
+      if (mpesaBtn) mpesaBtn.disabled = false;
+    }, 280);
+  }
 
   if (mpesaForm && mpesaTerminal && mpesaStatus) {
     mpesaForm.addEventListener("submit", (e) => {
       e.preventDefault();
       const phone = document.getElementById("mpesa-phone").value.trim() || "254783541086";
       const amount = document.getElementById("mpesa-amount").value.trim() || "3500";
-      const ref = document.getElementById("mpesa-ref").value.trim() || "EDU-FEES-DEMO";
+      const ref = document.getElementById("mpesa-ref").value.trim() || "EDU-TERM3-FEES";
 
       if (mpesaBtn) mpesaBtn.disabled = true;
       mpesaStatus.textContent = "TRANSMITTING...";
       mpesaStatus.style.color = "#ffbd2e";
+      resetMpesaFlowNodes();
 
-      appendTerminalLine(mpesaTerminal, `\n--- [NEW TRANSACTION: ${new Date().toLocaleTimeString()}] ---`, "t-dim");
+      if (phoneValAmount) phoneValAmount.textContent = Number(amount).toLocaleString('en-KE', { minimumFractionDigits: 2 });
+      if (phoneValRef) phoneValRef.textContent = ref;
+      if (phoneClock) phoneClock.textContent = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+
+      appendTerminalLine(mpesaTerminal, `\n--- [NEW DARAJA TRANSACTION: ${new Date().toLocaleTimeString()}] ---`, "t-dim");
       appendTerminalLine(mpesaTerminal, `[000ms] Initiating Lipa Na M-Pesa STK Push -> MSISDN: ${phone}, Amount: KES ${amount}, Ref: ${ref}`);
 
       setTimeout(() => {
+        setMpesaFlowNode(2);
         appendTerminalLine(mpesaTerminal, `[185ms] OAuth 2.0 Bearer Token verified against Safaricom Gateway`);
       }, 180);
 
       setTimeout(() => {
-        appendTerminalLine(mpesaTerminal, `[340ms] STK USSD prompt delivered to handset. ResponseCode: 0, CheckoutRequestID: ws_CO_261026_09`);
+        setMpesaFlowNode(3);
+        appendTerminalLine(mpesaTerminal, `[340ms] STK USSD prompt delivered to handset. ResponseCode: 0, CheckoutRequestID: ws_CO_${Date.now()}`);
+        if (mpesaPhoneCard) mpesaPhoneCard.classList.add("active");
+
+        // Auto-authorize if user doesn't click within 2.8s
+        mpesaTimer = setTimeout(() => {
+          executeMpesaCallback(phone, amount, ref);
+        }, 2800);
       }, 340);
+    });
 
-      setTimeout(() => {
-        appendTerminalLine(mpesaTerminal, `[690ms] Webhook Callback received: ResultCode: 0 (Success) TransactionID: QKD${Math.floor(100000 + Math.random() * 900000)}MP`, "t-success");
-        appendTerminalLine(mpesaTerminal, `[740ms] Automated Ledger Updated: Account ${ref} credited with KES ${amount}.00`, "t-gold");
-        appendTerminalLine(mpesaTerminal, `[810ms] BullMQ Job #NOTIF-827 dispatched: WhatsApp receipt delivered to ${phone}`, "t-info");
+    if (phoneConfirmBtn) {
+      phoneConfirmBtn.addEventListener("click", () => {
+        const phone = document.getElementById("mpesa-phone").value.trim() || "254783541086";
+        const amount = document.getElementById("mpesa-amount").value.trim() || "3500";
+        const ref = document.getElementById("mpesa-ref").value.trim() || "EDU-TERM3-FEES";
+        executeMpesaCallback(phone, amount, ref);
+      });
+    }
+  }
 
-        mpesaStatus.textContent = "SUCCESS &bull; 690ms";
-        mpesaStatus.style.color = "#38e17b";
-        if (mpesaBtn) mpesaBtn.disabled = false;
-      }, 720);
+  // Simulator Module 2: EduCore & EduCore Ratiba Solver
+  const btnSubRatiba = document.getElementById("btn-sub-ratiba");
+  const btnSubCbc = document.getElementById("btn-sub-cbc");
+  const subviewRatiba = document.getElementById("subview-ratiba");
+  const subviewCbc = document.getElementById("subview-cbc");
+  const ratibaGrid = document.getElementById("ratiba-matrix-grid");
+
+  if (btnSubRatiba && btnSubCbc && subviewRatiba && subviewCbc) {
+    btnSubRatiba.addEventListener("click", () => {
+      btnSubRatiba.classList.add("active");
+      btnSubCbc.classList.remove("active");
+      subviewRatiba.style.display = "block";
+      subviewCbc.style.display = "none";
+      if (ratibaGrid) ratibaGrid.style.display = "grid";
+    });
+
+    btnSubCbc.addEventListener("click", () => {
+      btnSubCbc.classList.add("active");
+      btnSubRatiba.classList.remove("active");
+      subviewRatiba.style.display = "none";
+      subviewCbc.style.display = "block";
+      if (ratibaGrid) ratibaGrid.style.display = "none";
     });
   }
 
-  // Simulator Module 2: EduCore Ratiba Solver
+  // Ratiba Timetable Solver Execution
   const ratibaBtn = document.getElementById("btn-trigger-ratiba");
+  const clashBtn = document.getElementById("btn-inject-clash");
   const ratibaTerminal = document.getElementById("ratiba-terminal");
   const ratibaStatus = document.getElementById("ratiba-sim-status");
+  const matrixHealth = document.getElementById("ratiba-matrix-status");
+  const clashCell1 = document.getElementById("tt-clash-1");
+  const clashCell2 = document.getElementById("tt-clash-2");
+  const wedSlot3 = document.getElementById("tt-slot-wed-3");
+  const thuSlot4 = document.getElementById("tt-slot-thu-4");
 
   if (ratibaBtn && ratibaTerminal && ratibaStatus) {
     ratibaBtn.addEventListener("click", () => {
@@ -432,36 +546,147 @@ document.addEventListener("DOMContentLoaded", () => {
       ratibaStatus.style.color = "#ffbd2e";
 
       appendTerminalLine(ratibaTerminal, `\n--- [SOLVER EXECUTION: ${new Date().toLocaleTimeString()}] ---`, "t-dim");
-      appendTerminalLine(ratibaTerminal, `[000ms] Initializing genetic timetable matrix across 4 grade streams and 40 weekly slots`);
+      appendTerminalLine(ratibaTerminal, `[000ms] Initializing FET combinatorial solver across 4 grade streams and 40 weekly slots`);
 
       setTimeout(() => {
-        appendTerminalLine(ratibaTerminal, `[120ms] Constraint Rule 1: Verifying teacher availability (12 teachers, max 24 periods/wk)`);
-      }, 120);
+        appendTerminalLine(ratibaTerminal, `[080ms] Hard Constraint 1: Scanning faculty schedules. Detected collision on Mon P3 (Tr. Kamau double-booked).`);
+      }, 90);
 
       setTimeout(() => {
-        appendTerminalLine(ratibaTerminal, `[250ms] Constraint Rule 2: Resolving practical lab collisions (Science Lab A/B allocated)`);
-      }, 250);
+        appendTerminalLine(ratibaTerminal, `[190ms] Hard Constraint 2: Scanning laboratory capacities. Detected collision on Tue P4 (Lab A over-subscribed).`);
+      }, 190);
 
       setTimeout(() => {
-        appendTerminalLine(ratibaTerminal, `[390ms] Optimization: Morning STEM alignment achieved (CBC requirements fulfilled 100%)`);
-      }, 390);
+        appendTerminalLine(ratibaTerminal, `[310ms] Backtracking search tree: Permuting 14 teacher slots and 2 laboratory access windows.`);
+      }, 310);
 
       setTimeout(() => {
-        appendTerminalLine(ratibaTerminal, `[480ms] CONVERGENCE REACHED: 0 room clashes, 0 teacher overlaps across 160 period assignments!`, "t-success");
-        appendTerminalLine(ratibaTerminal, `[510ms] Timetable PDF & digital teacher schedules compiled ready for download`, "t-gold");
+        // Resolve Matrix Cells visually
+        if (clashCell1) {
+          clashCell1.className = "tt-cell resolved";
+          clashCell1.innerHTML = `<span class="tt-sub">\u2713 Math (Gr. 7)</span><span class="tt-tag">Tr. Kamau [Solved]</span>`;
+        }
+        if (clashCell2) {
+          clashCell2.className = "tt-cell resolved";
+          clashCell2.innerHTML = `<span class="tt-sub">\u2713 Biology Lab</span><span class="tt-tag">Lab A [Solo Session]</span>`;
+        }
+        if (wedSlot3) {
+          wedSlot3.innerHTML = `<span class="tt-sub">Math (Gr. 8)</span><span class="tt-tag">Tr. Kamau [Reassigned]</span>`;
+        }
+        if (thuSlot4) {
+          thuSlot4.innerHTML = `<span class="tt-sub">Chemistry Lab</span><span class="tt-tag">Lab A [Scheduled]</span>`;
+        }
+
+        if (matrixHealth) {
+          matrixHealth.className = "status-pill status-ok";
+          matrixHealth.textContent = "\u2713 0 Clashes Active";
+        }
+
+        appendTerminalLine(ratibaTerminal, `[460ms] CONVERGENCE REACHED: 0 room clashes, 0 teacher overlaps across 160 period assignments!`, "t-success");
+        appendTerminalLine(ratibaTerminal, `[510ms] Timetable PDF & digital teacher schedules compiled ready for school deployment.`, "t-gold");
 
         ratibaStatus.textContent = "100% CLASH-FREE";
         ratibaStatus.style.color = "#38e17b";
         ratibaBtn.disabled = false;
-      }, 490);
+      }, 480);
     });
+
+    if (clashBtn) {
+      clashBtn.addEventListener("click", () => {
+        if (clashCell1) {
+          clashCell1.className = "tt-cell clash";
+          clashCell1.innerHTML = `<span class="tt-sub">\u26A0\uFE0F Tr. Kamau Clash</span><span class="tt-tag">Gr. 7 &amp; Gr. 8 Clashing</span>`;
+        }
+        if (clashCell2) {
+          clashCell2.className = "tt-cell clash";
+          clashCell2.innerHTML = `<span class="tt-sub">\u26A0\uFE0F Lab A Overlap</span><span class="tt-tag">Bio &amp; Chem Booked</span>`;
+        }
+        if (wedSlot3) {
+          wedSlot3.innerHTML = `<span class="tt-sub">Kiswahili</span><span class="tt-tag">Tr. Hassan</span>`;
+        }
+        if (thuSlot4) {
+          thuSlot4.innerHTML = `<span class="tt-sub">Free Study</span><span class="tt-tag">Hall B</span>`;
+        }
+        if (matrixHealth) {
+          matrixHealth.className = "status-pill status-warn";
+          matrixHealth.textContent = "\u26A0\uFE0F 2 Clashes Active";
+        }
+        appendTerminalLine(ratibaTerminal, `[INJECT] Sample teacher double-booking & laboratory collision injected into matrix.`, "t-gold");
+      });
+    }
   }
 
-  // Simulator Module 3: Core CRM Pipeline
+  // CBC Rubrics Assessment Engine Sliders
+  const rangeStem = document.getElementById("range-stem");
+  const rangeLang = document.getElementById("range-lang");
+  const rangeArts = document.getElementById("range-arts");
+  const valStem = document.getElementById("val-stem");
+  const valLang = document.getElementById("val-lang");
+  const valArts = document.getElementById("val-arts");
+  const cbcOverallPill = document.getElementById("cbc-overall-pill");
+  const cbcAutoRemark = document.getElementById("cbc-auto-remark");
+
+  function getCbcRubric(score) {
+    if (score >= 80) return { code: "EE", label: "Exceeding Expectations", cssClass: "status-ok" };
+    if (score >= 65) return { code: "ME", label: "Meeting Expectations", cssClass: "status-ok" };
+    if (score >= 50) return { code: "AE", label: "Approaching Expectations", cssClass: "status-warn" };
+    return { code: "BE", label: "Below Expectations", cssClass: "status-warn" };
+  }
+
+  function updateCbcAssessment() {
+    if (!rangeStem || !rangeLang || !rangeArts) return;
+    const stem = parseInt(rangeStem.value, 10);
+    const lang = parseInt(rangeLang.value, 10);
+    const arts = parseInt(rangeArts.value, 10);
+
+    const stemRub = getCbcRubric(stem);
+    const langRub = getCbcRubric(lang);
+    const artsRub = getCbcRubric(arts);
+
+    if (valStem) valStem.textContent = `${stem}% \u2022 ${stemRub.code}`;
+    if (valLang) valLang.textContent = `${lang}% \u2022 ${langRub.code}`;
+    if (valArts) valArts.textContent = `${arts}% \u2022 ${artsRub.code}`;
+
+    const avg = Math.round((stem + lang + arts) / 3);
+    const overall = getCbcRubric(avg);
+
+    if (cbcOverallPill) {
+      cbcOverallPill.className = `status-pill ${overall.cssClass}`;
+      cbcOverallPill.textContent = `${overall.code} (${overall.label})`;
+    }
+
+    if (cbcAutoRemark) {
+      if (avg >= 80) {
+        cbcAutoRemark.textContent = `"Demonstrates exceptional analytical mastery across core strands. Consistently exhibits strong initiative, self-direction, and teamwork in practical assignments."`;
+      } else if (avg >= 65) {
+        cbcAutoRemark.textContent = `"Consistently meets core competency standards across all subject strands with steady conceptual grasp and collaborative classroom participation."`;
+      } else if (avg >= 50) {
+        cbcAutoRemark.textContent = `"Demonstrates developing understanding in fundamental strands. Recommended for targeted inquiry-based exercises to strengthen practical application."`;
+      } else {
+        cbcAutoRemark.textContent = `"Requires dedicated remedial intervention and closer teacher scaffolding to achieve foundational competency levels."`;
+      }
+    }
+  }
+
+  if (rangeStem && rangeLang && rangeArts) {
+    rangeStem.addEventListener("input", updateCbcAssessment);
+    rangeLang.addEventListener("input", updateCbcAssessment);
+    rangeArts.addEventListener("input", updateCbcAssessment);
+  }
+
+  // Simulator Module 3: Core CRM Pipeline & Multi-Tenant BullMQ Queue
   const crmBtn = document.getElementById("btn-trigger-crm");
   const crmTerminal = document.getElementById("crm-terminal");
   const crmStatus = document.getElementById("crm-sim-status");
+  const crmTenantSelect = document.getElementById("crm-tenant-select");
+  const crmEventSelect = document.getElementById("crm-event-select");
+  const qWaiting = document.getElementById("q-waiting");
+  const qActive = document.getElementById("q-active");
+  const qCompleted = document.getElementById("q-completed");
+  const qLatency = document.getElementById("q-latency");
   let currentStageIndex = 0;
+  let completedJobCount = 5280;
+
   const stages = [
     { name: "Inbound Lead", stepId: "pipe-1" },
     { name: "Scoping Audit", stepId: "pipe-2" },
@@ -473,6 +698,9 @@ document.addEventListener("DOMContentLoaded", () => {
     crmBtn.addEventListener("click", () => {
       currentStageIndex = (currentStageIndex + 1) % stages.length;
       const stage = stages[currentStageIndex];
+      const tenantId = crmTenantSelect ? crmTenantSelect.value : "tenant_nbo_01";
+      const eventType = crmEventSelect ? crmEventSelect.value : "invoice_pdf";
+      const latency = Math.floor(11 + Math.random() * 8);
 
       stages.forEach((s, idx) => {
         const stepEl = document.getElementById(s.stepId);
@@ -487,11 +715,22 @@ document.addEventListener("DOMContentLoaded", () => {
         }
       });
 
-      appendTerminalLine(crmTerminal, `\n[PIPELINE-MOVE] Deal moved to stage "${stage.name}" (Tenant: nbo_sme_${Math.floor(100 + Math.random() * 900)})`, "t-gold");
-      appendTerminalLine(crmTerminal, `[BULLMQ-QUEUE] Job dispatched: queue.add("deal_state_transition", { stage: "${stage.name}" })`);
-      appendTerminalLine(crmTerminal, `[WORKER-02] Processed in 14ms: Invoices, SLA draft and audit log updated.`, "t-success");
+      completedJobCount++;
+      if (qCompleted) qCompleted.textContent = completedJobCount.toLocaleString();
+      if (qLatency) qLatency.textContent = `${latency}ms`;
 
-      crmStatus.textContent = `STAGE: ${stage.name.toUpperCase()}`;
+      appendTerminalLine(crmTerminal, `\n[SCHEMA-ROUTE] SET search_path TO ${tenantId}; (Tenant isolation confirmed)`, "t-gold");
+      appendTerminalLine(crmTerminal, `[BULLMQ-ENQUEUE] Job "job_${Math.random().toString(36).substring(2, 8)}" added to queue "crm-workers" (Event: ${eventType})`, "t-info");
+      appendTerminalLine(crmTerminal, `[WORKER-03] Processed in ${latency}ms -> Status: SUCCESS:\n` + JSON.stringify({
+        jobId: `job_${Math.random().toString(36).substring(2, 8)}`,
+        tenant: tenantId,
+        task: eventType,
+        pipelineStage: stage.name,
+        durationMs: latency,
+        status: "COMPLETED"
+      }, null, 2), "t-success");
+
+      crmStatus.textContent = `TENANT: ${tenantId.toUpperCase()} \u2022 ${stage.name.toUpperCase()}`;
     });
   }
 

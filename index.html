@@ -680,8 +680,21 @@
           <div class="sim-panel active" id="sim-mpesa" role="tabpanel">
             <div class="sim-panel-grid">
               <div class="sim-controls">
-                <h4>Safaricom Daraja STK Push &amp; Webhook Pipeline</h4>
-                <p>Simulate initiating a Lipa Na M-Pesa Online prompt to an end-user device and watch the sub-second webhook callback and automated ledger reconciliation.</p>
+                <h4>Safaricom Daraja 3.0 &bull; Real-Time Payment Pipeline</h4>
+                <p>Simulate initiating a Lipa Na M-Pesa Online STK Push and watch the sub-second handset authorization, HMAC webhook verification, and automated ledger reconciliation.</p>
+                
+                <div class="sim-flow-steps">
+                  <div class="flow-node active" id="flow-mpesa-1"><span>01</span> App / Checkout</div>
+                  <span class="flow-arrow">&rarr;</span>
+                  <div class="flow-node" id="flow-mpesa-2"><span>02</span> Daraja API</div>
+                  <span class="flow-arrow">&rarr;</span>
+                  <div class="flow-node" id="flow-mpesa-3"><span>03</span> Handset STK</div>
+                  <span class="flow-arrow">&rarr;</span>
+                  <div class="flow-node" id="flow-mpesa-4"><span>04</span> Webhook Verify</div>
+                  <span class="flow-arrow">&rarr;</span>
+                  <div class="flow-node" id="flow-mpesa-5"><span>05</span> Ledger Settled</div>
+                </div>
+
                 <form class="sim-form" id="mpesa-sim-form">
                   <div class="sim-field-row">
                     <label for="mpesa-phone">Customer Phone (MSISDN):</label>
@@ -692,15 +705,34 @@
                     <input type="number" id="mpesa-amount" value="3500" min="1" max="150000" required>
                   </div>
                   <div class="sim-field-row">
-                    <label for="mpesa-ref">Account Reference:</label>
+                    <label for="mpesa-ref">Account Reference / Invoice ID:</label>
                     <input type="text" id="mpesa-ref" value="EDU-TERM3-FEES" required>
                   </div>
-                  <button type="submit" class="sim-action-btn" id="btn-trigger-mpesa">
-                    <span>Initiate STK Push Simulation &rarr;</span>
-                  </button>
+                  <div class="sim-btn-row">
+                    <button type="submit" class="sim-action-btn" id="btn-trigger-mpesa">
+                      <span>Initiate STK Push Simulation &rarr;</span>
+                    </button>
+                  </div>
                 </form>
               </div>
+
               <div class="sim-terminal-wrap">
+                <!-- Interactive Phone USSD Prompt Card (appears during prompt) -->
+                <div class="sim-phone-card" id="mpesa-phone-card">
+                  <div class="phone-screen-top">
+                    <span>SIM Toolkit &bull; Safaricom M-PESA</span>
+                    <span id="phone-clock">23:28</span>
+                  </div>
+                  <div class="phone-screen-body">
+                    <p class="phone-prompt-text">Do you want to pay <strong>KES <span id="phone-val-amount">3,500.00</span></strong> to <strong>MuregiScore Technologies</strong> for Acc. <strong><span id="phone-val-ref">EDU-TERM3-FEES</span></strong>?</p>
+                    <div class="phone-pin-field">
+                      <span>Enter M-PESA PIN:</span>
+                      <span class="pin-bullets">&bull;&bull;&bull;&bull;</span>
+                    </div>
+                    <button type="button" class="phone-confirm-btn" id="btn-phone-confirm">Authorize Handset Payment &rarr;</button>
+                  </div>
+                </div>
+
                 <div class="terminal-header">
                   <span class="terminal-dots">
                     <span class="t-red"></span>
@@ -713,30 +745,129 @@
                 <div class="terminal-body" id="mpesa-terminal">
                   <div class="t-line t-dim">// MuregiScore Safaricom Daraja STK Push Simulator</div>
                   <div class="t-line t-dim">// Click "Initiate STK Push Simulation" above to test sub-second callback cycle...</div>
-                  <div class="t-line t-gold">[SYS-INIT] Gateway connected to Safaricom Daraja API 2.0</div>
+                  <div class="t-line t-gold">[SYS-INIT] Gateway connected to Safaricom Daraja API 2.0 / 3.0</div>
                   <div class="t-line t-gold">[SYS-INIT] Webhook listener armed: /api/v1/payments/daraja/callback</div>
                 </div>
               </div>
             </div>
           </div>
 
-          <!-- Panel 2: EduCore Ratiba Solver Simulation -->
+          <!-- Panel 2: EduCore & EduCore Ratiba Solver Simulation -->
           <div class="sim-panel" id="sim-ratiba" role="tabpanel" style="display: none;">
             <div class="sim-panel-grid">
               <div class="sim-controls">
-                <h4>EduCore Ratiba &bull; CBC Timetable Constraint Solver</h4>
-                <p>Run our genetic constraint solver across 4 grade streams, 18 CBC learning areas, 12 specialized teachers, and 2 science labs to generate a clash-free schedule.</p>
-                <div class="sim-stats-chips">
-                  <div class="sim-chip"><strong>Streams:</strong> Grade 7, 8, 9</div>
-                  <div class="sim-chip"><strong>Subjects:</strong> 18 CBC Disciplines</div>
-                  <div class="sim-chip"><strong>Teachers:</strong> 12 Faculty Staff</div>
-                  <div class="sim-chip"><strong>Weekly Slots:</strong> 40 Periods</div>
+                <div class="cbc-sub-nav">
+                  <button type="button" class="cbc-sub-btn active" id="btn-sub-ratiba">Ratiba Timetable Solver</button>
+                  <button type="button" class="cbc-sub-btn" id="btn-sub-cbc">CBC Rubrics Assessment</button>
                 </div>
-                <button type="button" class="sim-action-btn" id="btn-trigger-ratiba">
-                  <span>Execute Constraint Solver &rarr;</span>
-                </button>
+
+                <!-- Sub-view 1: Ratiba Solver -->
+                <div id="subview-ratiba">
+                  <h4>EduCore Ratiba &bull; CBC Timetable Constraint Solver</h4>
+                  <p>Our combinatorial algorithm scans teacher allocations, classroom capacities, and shared science laboratories to eliminate double-booking with 100% mathematical certainty.</p>
+                  
+                  <div class="sim-stats-chips">
+                    <div class="sim-chip"><strong>Streams:</strong> Gr. 7, 8, 9 (CBC)</div>
+                    <div class="sim-chip"><strong>Faculty:</strong> 14 Teachers</div>
+                    <div class="sim-chip"><strong>Labs:</strong> 2 Science / ICT</div>
+                    <div class="sim-chip"><strong>Health:</strong> <span id="ratiba-matrix-status" class="status-pill status-warn">⚠️ 2 Clashes Active</span></div>
+                  </div>
+
+                  <div class="sim-btn-row">
+                    <button type="button" class="sim-action-btn" id="btn-trigger-ratiba">
+                      <span>Execute Constraint Solver &rarr;</span>
+                    </button>
+                    <button type="button" class="sim-secondary-btn" id="btn-inject-clash">
+                      <span>Inject Sample Clash</span>
+                    </button>
+                  </div>
+                </div>
+
+                <!-- Sub-view 2: CBC Assessment (Hidden by default) -->
+                <div id="subview-cbc" style="display: none;">
+                  <h4>EduCore &bull; Automated CBC Strands &amp; Remarks Engine</h4>
+                  <p>Calibrated for Kenya's Competency-Based Curriculum. Adjust continuous assessment metrics below to see instant performance rubric calculation and auto-generated teacher remarks.</p>
+
+                  <div class="cbc-assessment-box">
+                    <div class="cbc-slider-row">
+                      <div class="cbc-slider-header">
+                        <strong>Integrated Science &amp; STEM:</strong>
+                        <span class="cbc-rubric-val" id="val-stem">84% &bull; EE</span>
+                      </div>
+                      <input type="range" class="cbc-range-input" id="range-stem" min="40" max="100" value="84">
+                    </div>
+                    <div class="cbc-slider-row">
+                      <div class="cbc-slider-header">
+                        <strong>Languages &amp; Social Studies:</strong>
+                        <span class="cbc-rubric-val" id="val-lang">74% &bull; ME</span>
+                      </div>
+                      <input type="range" class="cbc-range-input" id="range-lang" min="40" max="100" value="74">
+                    </div>
+                    <div class="cbc-slider-row">
+                      <div class="cbc-slider-header">
+                        <strong>Creative Arts &amp; Collaboration:</strong>
+                        <span class="cbc-rubric-val" id="val-arts">88% &bull; EE</span>
+                      </div>
+                      <input type="range" class="cbc-range-input" id="range-arts" min="40" max="100" value="88">
+                    </div>
+
+                    <div class="cbc-remark-card">
+                      <strong>OVERALL CBC LEVEL: <span id="cbc-overall-pill" class="status-pill status-ok">EE (Exceeding Expectations)</span></strong>
+                      <span id="cbc-auto-remark">"Demonstrates outstanding analytical mastery in core STEM areas and consistently exhibits strong leadership and collaboration in practical learning strands."</span>
+                    </div>
+                  </div>
+                </div>
               </div>
+
               <div class="sim-terminal-wrap">
+                <!-- Visual Timetable Matrix (in Ratiba mode) -->
+                <div class="timetable-visual-grid" id="ratiba-matrix-grid">
+                  <div class="tt-head">Period</div>
+                  <div class="tt-head">Monday</div>
+                  <div class="tt-head">Tuesday</div>
+                  <div class="tt-head">Wednesday</div>
+                  <div class="tt-head">Thursday</div>
+                  <div class="tt-head">Friday</div>
+
+                  <!-- Period 1 -->
+                  <div class="tt-time">P1 08:20</div>
+                  <div class="tt-cell"><span class="tt-sub">Math</span><span class="tt-tag">Tr. Kamau</span></div>
+                  <div class="tt-cell"><span class="tt-sub">Science</span><span class="tt-tag">Tr. Otieno</span></div>
+                  <div class="tt-cell"><span class="tt-sub">English</span><span class="tt-tag">Tr. Wanjiku</span></div>
+                  <div class="tt-cell"><span class="tt-sub">Social St.</span><span class="tt-tag">Tr. Mwangi</span></div>
+                  <div class="tt-cell"><span class="tt-sub">Agri/Nutr.</span><span class="tt-tag">Tr. Mutua</span></div>
+
+                  <!-- Period 2 -->
+                  <div class="tt-time">P2 09:00</div>
+                  <div class="tt-cell"><span class="tt-sub">English</span><span class="tt-tag">Tr. Wanjiku</span></div>
+                  <div class="tt-cell"><span class="tt-sub">Pre-Tech</span><span class="tt-tag">Tr. Kimani</span></div>
+                  <div class="tt-cell"><span class="tt-sub">Math</span><span class="tt-tag">Tr. Kamau</span></div>
+                  <div class="tt-cell"><span class="tt-sub">Kiswahili</span><span class="tt-tag">Tr. Hassan</span></div>
+                  <div class="tt-cell"><span class="tt-sub">P.E./Games</span><span class="tt-tag">Tr. Omondi</span></div>
+
+                  <!-- Period 3 (Injected Clash 1) -->
+                  <div class="tt-time">P3 10:00</div>
+                  <div class="tt-cell clash" id="tt-clash-1">
+                    <span class="tt-sub">⚠️ Tr. Kamau Clash</span>
+                    <span class="tt-tag">Gr. 7 &amp; Gr. 8 Clashing</span>
+                  </div>
+                  <div class="tt-cell"><span class="tt-sub">Creative Arts</span><span class="tt-tag">Tr. Achieng</span></div>
+                  <div class="tt-cell" id="tt-slot-wed-3"><span class="tt-sub">Kiswahili</span><span class="tt-tag">Tr. Hassan</span></div>
+                  <div class="tt-cell"><span class="tt-sub">Pre-Tech</span><span class="tt-tag">Tr. Kimani</span></div>
+                  <div class="tt-cell"><span class="tt-sub">English</span><span class="tt-tag">Tr. Wanjiku</span></div>
+
+                  <!-- Period 4 (Injected Clash 2) -->
+                  <div class="tt-time">P4 11:00</div>
+                  <div class="tt-cell"><span class="tt-sub">Social St.</span><span class="tt-tag">Tr. Mwangi</span></div>
+                  <div class="tt-cell clash" id="tt-clash-2">
+                    <span class="tt-sub">⚠️ Lab A Overlap</span>
+                    <span class="tt-tag">Bio &amp; Chem Booked</span>
+                  </div>
+                  <div class="tt-cell"><span class="tt-sub">Science</span><span class="tt-tag">Tr. Otieno</span></div>
+                  <div class="tt-cell" id="tt-slot-thu-4"><span class="tt-sub">Free Study</span><span class="tt-tag">Hall B</span></div>
+                  <div class="tt-cell"><span class="tt-sub">Math</span><span class="tt-tag">Tr. Kamau</span></div>
+                </div>
+
                 <div class="terminal-header">
                   <span class="terminal-dots">
                     <span class="t-red"></span>
@@ -750,7 +881,7 @@
                   <div class="t-line t-dim">// CBC Curriculum Constraint Solver (FET Calibrated)</div>
                   <div class="t-line t-info">[CONFIG] Hard constraints: Zero teacher double-booking, zero lab overlap</div>
                   <div class="t-line t-info">[CONFIG] Soft constraints: Balanced teacher daily workload, morning core STEM</div>
-                  <div class="t-line t-gold">[READY] Waiting for user execution command...</div>
+                  <div class="t-line t-gold">[READY] 2 Clashes identified in preview matrix. Click "Execute Constraint Solver" to resolve.</div>
                 </div>
               </div>
             </div>
@@ -760,18 +891,48 @@
           <div class="sim-panel" id="sim-crm" role="tabpanel" style="display: none;">
             <div class="sim-panel-grid">
               <div class="sim-controls">
-                <h4>Core CRM Multi-Tenant Architecture &amp; BullMQ</h4>
-                <p>Simulate customer deal lifecycle transitions and background worker processing for invoice generation, WhatsApp receipts, and audit trail generation.</p>
+                <h4>Core CRM &bull; Multi-Tenant Architecture &amp; Redis BullMQ</h4>
+                <p>Simulate customer deal lifecycle transitions and background worker processing for invoice generation, WhatsApp receipts, and audit trail generation across isolated PostgreSQL schemas.</p>
+                
+                <div class="sim-field-row">
+                  <label for="crm-tenant-select">Active Client Tenant (Isolated Schema):</label>
+                  <select id="crm-tenant-select" class="sim-select">
+                    <option value="tenant_nbo_01">Nairobi Retail &amp; Logistics (schema: tenant_nbo_01)</option>
+                    <option value="tenant_kbu_02">Kiambu Agricultural Supply Co-op (schema: tenant_kbu_02)</option>
+                    <option value="tenant_msa_03">Mombasa Maritime Logistics Ltd (schema: tenant_msa_03)</option>
+                  </select>
+                </div>
+
+                <div class="sim-field-row">
+                  <label for="crm-event-select">Trigger Asynchronous Background Task:</label>
+                  <select id="crm-event-select" class="sim-select">
+                    <option value="invoice_pdf">Compile Invoice PDF &amp; Send WhatsApp Receipt</option>
+                    <option value="lead_score">Calculate Inbound Lead Intent Score (AI Model)</option>
+                    <option value="ledger_audit">Run Nightly Automated Double-Entry Ledger Reconciliation</option>
+                  </select>
+                </div>
+
                 <div class="sim-pipeline-stages">
                   <div class="pipe-step active" id="pipe-1">1. Inbound Lead</div>
                   <div class="pipe-step" id="pipe-2">2. Scoping Audit</div>
                   <div class="pipe-step" id="pipe-3">3. SLA Contract</div>
                   <div class="pipe-step" id="pipe-4">4. Active Tenant</div>
                 </div>
-                <button type="button" class="sim-action-btn" id="btn-trigger-crm">
-                  <span>Advance Deal &amp; Dispatch BullMQ Queue &rarr;</span>
-                </button>
+
+                <div class="sim-btn-row">
+                  <button type="button" class="sim-action-btn" id="btn-trigger-crm">
+                    <span>Dispatch Async Job to Redis Queue &rarr;</span>
+                  </button>
+                </div>
+
+                <div class="queue-stats-row">
+                  <div class="q-stat"><span class="q-num" id="q-waiting">0</span><span class="q-lbl">Queue Waiting</span></div>
+                  <div class="q-stat"><span class="q-num" id="q-active">0</span><span class="q-lbl">Active Workers</span></div>
+                  <div class="q-stat"><span class="q-num" id="q-completed">5,280</span><span class="q-lbl">Processed Today</span></div>
+                  <div class="q-stat"><span class="q-num" id="q-latency">14ms</span><span class="q-lbl">Avg Response</span></div>
+                </div>
               </div>
+
               <div class="sim-terminal-wrap">
                 <div class="terminal-header">
                   <span class="terminal-dots">
@@ -784,9 +945,9 @@
                 </div>
                 <div class="terminal-body" id="crm-terminal">
                   <div class="t-line t-dim">// Core CRM Multi-Tenant Background Queue Worker</div>
-                  <div class="t-line t-gold">[REDIS-READY] Redis BullMQ connection established (Worker pool: 4)</div>
-                  <div class="t-line t-info">[AUDIT-LOG] Tenant ID: tenant_ke_nbo_092 authenticated</div>
-                  <div class="t-line t-info">[PIPELINE] Current deal: "Nairobi Logistics SME Core CRM Rollout"</div>
+                  <div class="t-line t-gold">[REDIS-READY] Redis BullMQ connection established (Worker pool: 4 active)</div>
+                  <div class="t-line t-info">[AUDIT-LOG] Tenant ID: tenant_nbo_01 authenticated</div>
+                  <div class="t-line t-info">[PIPELINE] Current active pipeline: "Nairobi Logistics SME Core CRM Rollout"</div>
                 </div>
               </div>
             </div>
