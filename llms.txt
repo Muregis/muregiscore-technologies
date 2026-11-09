@@ -25,7 +25,7 @@ Victor Muregi is a full-stack software engineer and systems architect based in N
 - **Division 01: Business Software**: Multi-tenant CRM platforms, client lifecycle management, sales deal pipelines, and automated business workflows engineered for African SMEs. Built with BullMQ background job queues, Redis caching, and audit trails.
   - Architecture Model: [Core CRM GitHub Model](https://github.com/Muregis/Core-Crm-model)
 - **Division 02: Education Technology**: End-to-end institutional administration supporting CBC (Competency-Based Curriculum) and 8-4-4 structures. Features student records, automated fee reconciliation, report card generation, and algorithmic timetable clash resolution.
-  - Live Deployments: [EduCore Platform](https://educore.muregiscore.me), [EduCore Ratiba Solver](https://ratiba.muregiscore.me)
+  - Live Deployments: [EduCore Platform](https://educore.muregiscore.me), [EduCore Ratiba Solver](https://educore-ratiba.muregiscore.me)
   - Repositories: [EduCore GitHub](https://github.com/Muregis/educore-school-management-system), [Ratiba Engine GitHub](https://github.com/Muregis/Educore-Ratiba)
 - **Division 03: Payments & Integrations**: Financial pipelines connecting directly to telecommunications rails, specializing in Safaricom Daraja M-Pesa STK Push, C2B automated webhooks, Paybill & Till transaction reconciliation, and bulk B2C disbursements.
 - **Division 04: Industry-Specific Systems**: Agricultural and biological operational tracking systems. Includes livestock digital passports, pedigree lineage tracking, daily milk yield analytics, veterinary regimens, and field inventory.

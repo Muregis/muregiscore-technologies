@@ -45,7 +45,7 @@ Victor Muregi (also searched as Muregi or I_am.muregi) is a Kenyan full-stack so
     - Code: https://github.com/Muregis/educore-school-management-system
     - Features: Student information system (SIS), guardian portals, automated billing, Paystack & M-Pesa integration, academic grading.
   - **EduCore Ratiba Solver**:
-    - URL: https://ratiba.muregiscore.me
+    - URL: https://educore-ratiba.muregiscore.me
     - Code: https://github.com/Muregis/Educore-Ratiba
     - Features: Algorithmic timetable generation avoiding double-booking of rooms, teachers, and practical laboratories; calibrated for CBC dual-pathway learning.
 
